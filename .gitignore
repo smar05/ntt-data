@@ -39,3 +39,7 @@
 # System files
 /front/.DS_Store
 /front/Thumbs.db
+
+
+## SERVER #####################
+/server/node_modules
