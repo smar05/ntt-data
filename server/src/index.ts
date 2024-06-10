@@ -1,6 +1,8 @@
 import express, { Application } from "express";
 import morgan from "morgan";
 import cors from "cors";
+import proveedoresRoutes from "./routes/proveedores.routes";
+import vehiculosRoutes from "./routes/vehiculos.routes";
 
 class Server {
   public app: Application;
@@ -19,7 +21,10 @@ class Server {
     this.app.use(express.urlencoded({ extended: false }));
   }
 
-  routes(): void {}
+  routes(): void {
+    this.app.use("/proveedores", proveedoresRoutes);
+    this.app.use("/vehiculos", vehiculosRoutes);
+  }
 
   start(): void {
     this.app.listen(this.app.get("port"), () => {
