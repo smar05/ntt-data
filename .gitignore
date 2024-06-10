@@ -43,3 +43,4 @@
 
 ## SERVER #####################
 /server/node_modules
+/server/build
