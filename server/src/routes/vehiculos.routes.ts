@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { vehiculosController } from "../controllers/vehiculos.controler";
 
 class VehiculosRoutes {
   public router: Router = Router();
@@ -7,7 +8,13 @@ class VehiculosRoutes {
     this.config();
   }
 
-  config(): void {}
+  config(): void {
+    this.router.get("/", vehiculosController.list);
+    this.router.get("/:id", vehiculosController.getOne);
+    this.router.post("/", vehiculosController.create);
+    this.router.delete("/:id", vehiculosController.delete);
+    this.router.put("/:id", vehiculosController.update);
+  }
 }
 
 const vehiculosRoutes = new VehiculosRoutes();
