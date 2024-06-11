@@ -4,7 +4,10 @@ import pool from "../database/pool";
 class VehiculosController {
   public async list(req: Request, res: Response): Promise<any> {
     await pool.query("SELECT * FROM vehiculo", (err, result, fields) => {
-      if (err) throw err;
+      if (err) {
+        res.status(500).json(err);
+        return;
+      }
       res.json(result);
     });
   }
@@ -26,7 +29,8 @@ class VehiculosController {
   public async create(req: Request, res: Response): Promise<void> {
     await pool.query("INSERT INTO vehiculo set ?", [req.body], (err) => {
       if (err) {
-        throw err;
+        res.status(500).json(err);
+        return;
       }
       res.json({ message: "Proveedor guardado" });
     });
@@ -39,7 +43,8 @@ class VehiculosController {
       [id],
       (err, result, fields) => {
         if (err) {
-          throw err;
+          res.status(500).json(err);
+          return;
         }
         res.json({ message: "Proveedor eliminado" });
       }
@@ -53,7 +58,8 @@ class VehiculosController {
       [req.body, id],
       (err, result, fields) => {
         if (err) {
-          throw err;
+          res.status(500).json(err);
+          return;
         }
         res.json({ message: "El proveedor fue actualizado" });
       }

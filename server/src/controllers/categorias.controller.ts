@@ -4,7 +4,10 @@ import pool from "../database/pool";
 class CategoriasController {
   public async list(req: Request, res: Response): Promise<any> {
     await pool.query("SELECT * FROM categoria", (err, result, fields) => {
-      if (err) throw err;
+      if (err) {
+        res.status(500).json(err);
+        return;
+      }
       res.json(result);
     });
   }
@@ -26,7 +29,8 @@ class CategoriasController {
   public async create(req: Request, res: Response): Promise<void> {
     await pool.query("INSERT INTO categoria set ?", [req.body], (err) => {
       if (err) {
-        throw err;
+        res.status(500).json(err);
+        return;
       }
       res.json({ message: "Categoria guardada" });
     });
@@ -39,7 +43,8 @@ class CategoriasController {
       [id],
       (err, result, fields) => {
         if (err) {
-          throw err;
+          res.status(500).json(err);
+          return;
         }
         res.json({ message: "Categoria eliminada" });
       }
@@ -53,7 +58,8 @@ class CategoriasController {
       [req.body, id],
       (err, result, fields) => {
         if (err) {
-          throw err;
+          res.status(500).json(err);
+          return;
         }
         res.json({ message: "La categoria fue actualizada" });
       }

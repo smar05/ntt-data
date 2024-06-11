@@ -2,7 +2,7 @@ import express, { Application } from "express";
 import morgan from "morgan";
 import cors from "cors";
 import vehiculosRoutes from "./routes/vehiculos.routes";
-import categoriasRouter from "./routes/categorias.router";
+import categoriasRouter from "./routes/categorias.routes";
 
 class Server {
   public app: Application;
