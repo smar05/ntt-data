@@ -24,8 +24,12 @@ class VehiculosController {
   }
 
   public async create(req: Request, res: Response): Promise<void> {
-    await pool.query("INSERT INTO vehiculo set ?", [req.body]);
-    res.json({ message: "Proveedor guardado" });
+    await pool.query("INSERT INTO vehiculo set ?", [req.body], (err) => {
+      if (err) {
+        throw err;
+      }
+      res.json({ message: "Proveedor guardado" });
+    });
   }
 
   public async delete(req: Request, res: Response): Promise<any> {

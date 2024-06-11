@@ -42,4 +42,28 @@ export class VehiculosService {
   public getVehiculo(id: number): Observable<IVehiculo[] | IVehiculo> {
     return this.httpService.get(`${this.url}/${id}`);
   }
+
+  /**
+   * Actualizar los datos del vehiculo
+   *
+   * @param {number} id
+   * @param {IVehiculo} body
+   * @return {*}  {Observable<any>}
+   * @memberof VehiculosService
+   */
+  public putVehiculo(id: number, body: IVehiculo): Observable<any> {
+    return this.httpService.put(`${this.url}/${id}`, body);
+  }
+
+  /**
+   * Nuevo vehiculo
+   *
+   * @param {number} id
+   * @param {IVehiculo} body
+   * @return {*}  {Observable<any>}
+   * @memberof VehiculosService
+   */
+  public postVehiculo(body: IVehiculo): Observable<any> {
+    return this.httpService.post(`${this.url}`, body);
+  }
 }

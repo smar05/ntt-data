@@ -3,7 +3,7 @@ export interface IVehiculo {
   placa: string;
   modelo: string;
   estado: string;
-  fecha: Date;
+  fecha: string;
   marca: string;
   descripcion: string;
 }

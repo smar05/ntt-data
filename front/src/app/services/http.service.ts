@@ -31,4 +31,28 @@ export class HttpService {
   public delete(url: string): Observable<any> {
     return this.http.delete(`${this.urlBack}${url}`);
   }
+
+  /**
+   * Metodo PUT
+   *
+   * @param {string} url
+   * @param {*} [body={}]
+   * @return {*}  {*}
+   * @memberof HttpService
+   */
+  public put(url: string, body: any = {}): Observable<any> {
+    return this.http.put(`${this.urlBack}${url}`, body);
+  }
+
+  /**
+   * Metodo POST
+   *
+   * @param {string} url
+   * @param {*} [body={}]
+   * @return {*}  {*}
+   * @memberof HttpService
+   */
+  public post(url: string, body: any = {}): Observable<any> {
+    return this.http.post(`${this.urlBack}${url}`, body);
+  }
 }

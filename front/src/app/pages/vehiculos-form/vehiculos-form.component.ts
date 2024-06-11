@@ -4,7 +4,8 @@ import {
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { EnumRutas } from 'src/app/enums/enums-rutas';
 import { IVehiculo } from 'src/app/interface/i-vehiculo';
 import { VehiculosService } from 'src/app/services/vehiculos.service';
 
@@ -68,12 +69,13 @@ export class VehiculosFormComponent {
     return this.f.controls['descripcion'];
   }
 
-  edit: boolean = false;
+  private edit: boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private form: UntypedFormBuilder,
-    private vehiculoService: VehiculosService
+    private vehiculoService: VehiculosService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -94,32 +96,46 @@ export class VehiculosFormComponent {
     }
   }
 
-  saveNewVehiculo() {
-    /*delete this.proveedor.id;
-    delete this.proveedor.fecha;
-    this.proveedoresService.saveProveedor(this.proveedor).subscribe(
-      (res) => {
-        console.log(res);
-        this.router.navigate(['/proveedores']);
-      },
-      (err) => console.error(err)
-    );
-    this.proveedor = {
-      nombre: '',
-      direccion: '',
-      correo: '',
-      vehiculos: 0,
-    };*/
-  }
+  public saveVehiculo(): void {
+    if (this.f.invalid) return;
 
-  updateVehiculo() {
-    /*this.proveedoresService
-      .updateProveedor(this.proveedor.id, this.proveedor)
-      .subscribe(
+    let vehiculoData: IVehiculo = {} as any;
+
+    // editar un vehiculo
+    if (this.edit) {
+      vehiculoData = {
+        id: this.vehiculo.id,
+        marca: this.marca.value,
+        modelo: this.modelo.value,
+        descripcion: this.descripcion.value,
+        placa: this.placa.value,
+        estado: this.estado.value,
+        fecha: this.vehiculo.fecha.split('T')[0],
+      };
+
+      this.vehiculoService.putVehiculo(vehiculoData.id, vehiculoData).subscribe(
         (res) => {
-          this.router.navigate(['/proveedores']);
+          this.router.navigate([`/${EnumRutas.HOME}`]);
         },
         (err) => console.error(err)
-      );*/
+      );
+    } else {
+      // Guardar nuevo vehiculo
+      vehiculoData = {
+        marca: this.marca.value,
+        modelo: this.modelo.value,
+        descripcion: this.descripcion.value,
+        placa: this.placa.value,
+        estado: this.estado.value,
+        fecha: new Date().toISOString().split('T')[0],
+      } as any;
+
+      this.vehiculoService.postVehiculo(vehiculoData).subscribe(
+        (res) => {
+          this.router.navigate([`/${EnumRutas.HOME}`]);
+        },
+        (err) => console.error(err)
+      );
+    }
   }
 }
