@@ -3,6 +3,7 @@ import morgan from "morgan";
 import cors from "cors";
 import vehiculosRoutes from "./routes/vehiculos.routes";
 import categoriasRouter from "./routes/categorias.routes";
+import { swaggerSpec, swaggerUi } from "./swagger";
 
 class Server {
   public app: Application;
@@ -24,6 +25,9 @@ class Server {
     );
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: false }));
+
+    // Documentacion Swagger
+    this.app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
   }
 
   routes(): void {
