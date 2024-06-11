@@ -41,3 +41,9 @@ ADD CONSTRAINT `fk_vehiculo_categoria`
   REFERENCES `datosprovedores`.`categoria` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
+
+CREATE TABLE usuarios(
+    id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(18),
+    password VARCHAR(18)
+);

@@ -4,6 +4,7 @@ import cors from "cors";
 import vehiculosRoutes from "./routes/vehiculos.routes";
 import categoriasRouter from "./routes/categorias.routes";
 import { swaggerSpec, swaggerUi } from "./swagger";
+import usuariosRoutes from "./routes/usuarios.routes";
 
 class Server {
   public app: Application;
@@ -31,6 +32,7 @@ class Server {
   }
 
   routes(): void {
+    this.app.use("/usuarios", usuariosRoutes);
     this.app.use("/vehiculos", vehiculosRoutes);
     this.app.use("/categorias", categoriasRouter);
   }
