@@ -13,8 +13,9 @@ export class VehiculosListComponent {
       placa: 'placa',
       modelo: 'modelo',
       marca: 'marca',
-      estado: true,
+      estado: 'Nuevo',
       fecha: new Date(),
+      descripcion: '',
     },
   ];
 

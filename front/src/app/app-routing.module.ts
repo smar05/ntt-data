@@ -5,12 +5,7 @@ import { EnumRutas } from 'src/app/enums/enums-rutas';
 const routes: Routes = [
   {
     path: EnumRutas.HOME,
-    redirectTo: `/${EnumRutas.LISTADO_VEHICULOS}`,
-    pathMatch: 'full',
-  },
-  {
-    path: '**',
-    redirectTo: `/${EnumRutas.LISTADO_VEHICULOS}`,
+    redirectTo: `/${EnumRutas.VEHICULOS}`,
     pathMatch: 'full',
   },
 ];

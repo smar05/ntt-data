@@ -19,7 +19,7 @@
             class="nav-link"
             aria-current="page"
             routerLinkActive="active"
-            routerLink="/proveedores"
+            routerLink="/vehiculos"
           >
             <i class="fas fa-users"></i>
             Proveedores</a
@@ -29,10 +29,10 @@
           <a
             class="nav-link"
             routerLinkActive="active"
-            routerLink="/proveedores/add"
+            (click)="this.newVehiculo()"
           >
             <i class="fas fa-plus-circle"></i>
-            Crear Proveedor</a
+            Crear Vehiculo</a
           >
         </li>
       </ul>

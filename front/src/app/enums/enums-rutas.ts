@@ -1,4 +1,6 @@
 export enum EnumRutas {
   HOME = '',
-  LISTADO_VEHICULOS = 'listado-vehiculos',
+  VEHICULOS = 'vehiculos',
+  ADD_VEHICULOS = `add`,
+  EDIT_VEHICULOS = `edit`,
 }
