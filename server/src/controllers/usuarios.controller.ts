@@ -26,6 +26,20 @@ class UsuariosController {
     );
   }
 
+  public async getOneByUsername(req: Request, res: Response): Promise<any> {
+    const { username } = req.params;
+    await pool.query(
+      "SELECT * FROM usuarios WHERE username like ?",
+      [username],
+      (err, result, fields) => {
+        if (result.length > 0) {
+          return res.json(result[0]);
+        }
+        res.status(404).json({ text: "No se encontro el usuario" });
+      }
+    );
+  }
+
   public async create(req: Request, res: Response): Promise<void> {
     await pool.query("INSERT INTO usuarios set ?", [req.body], (err) => {
       if (err) {

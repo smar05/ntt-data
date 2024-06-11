@@ -73,6 +73,38 @@ class UsuariosRoutes {
      *         description: Error interno del servidor
      */
     this.router.get("/:id", usuariosController.getOne);
+
+    /**
+     * @swagger
+     * /usuarios/username/{username}:
+     *   get:
+     *     summary: Obtener detalles del usuario
+     *     description: Obtiene los detalles de un usuario por username
+     *     parameters:
+     *       - in: path
+     *         name: username
+     *         schema:
+     *           type: string
+     *         required: true
+     *         description: username del usuario
+     *     responses:
+     *       200:
+     *         description: Detalles del usuario obtenidos exitosamente
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 id:
+     *                   type: number
+     *                 username:
+     *                   type: string
+     *                 password:
+     *                   type: string
+     *       500:
+     *         description: Error interno del servidor
+     */
+    this.router.get("/username/:username", usuariosController.getOneByUsername);
     /**
      * @swagger
      * /usuarios:

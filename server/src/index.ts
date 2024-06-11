@@ -5,6 +5,7 @@ import vehiculosRoutes from "./routes/vehiculos.routes";
 import categoriasRouter from "./routes/categorias.routes";
 import { swaggerSpec, swaggerUi } from "./swagger";
 import usuariosRoutes from "./routes/usuarios.routes";
+import loginRoutes from "./routes/login.routes";
 
 class Server {
   public app: Application;
@@ -32,6 +33,7 @@ class Server {
   }
 
   routes(): void {
+    this.app.use("/auth", loginRoutes);
     this.app.use("/usuarios", usuariosRoutes);
     this.app.use("/vehiculos", vehiculosRoutes);
     this.app.use("/categorias", categoriasRouter);
