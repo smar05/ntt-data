@@ -1,8 +1,8 @@
 import express, { Application } from "express";
 import morgan from "morgan";
 import cors from "cors";
-import proveedoresRoutes from "./routes/proveedores.routes";
 import vehiculosRoutes from "./routes/vehiculos.routes";
+import categoriasRouter from "./routes/categorias.routes";
 
 class Server {
   public app: Application;
@@ -22,8 +22,8 @@ class Server {
   }
 
   routes(): void {
-    this.app.use("/proveedores", proveedoresRoutes);
     this.app.use("/vehiculos", vehiculosRoutes);
+    this.app.use("/categorias", categoriasRouter);
   }
 
   start(): void {

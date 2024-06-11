@@ -1,10 +1,13 @@
 import { Request, Response } from "express";
 import pool from "../database/pool";
 
-class proveedoresController {
+class CategoriasController {
   public async list(req: Request, res: Response): Promise<any> {
-    await pool.query("SELECT * FROM provedor", (err, result, fields) => {
-      if (err) throw err;
+    await pool.query("SELECT * FROM categoria", (err, result, fields) => {
+      if (err) {
+        res.status(500).json(err);
+        return;
+      }
       res.json(result);
     });
   }
@@ -12,40 +15,38 @@ class proveedoresController {
   public async getOne(req: Request, res: Response): Promise<any> {
     const { id } = req.params;
     await pool.query(
-      "SELECT * FROM provedor WHERE id = ?",
+      "SELECT * FROM categoria WHERE id = ?",
       [id],
       (err, result, fields) => {
         if (result.length > 0) {
           return res.json(result[0]);
         }
-        res.status(404).json({ text: "No se encontro el proveedor" });
+        res.status(404).json({ text: "No se encontro la categoria" });
       }
     );
   }
 
   public async create(req: Request, res: Response): Promise<void> {
-    await pool.query(
-      "INSERT INTO provedor set ?",
-      [req.body],
-      (err, result, fields) => {
-        if (err) {
-          throw err;
-        }
-        res.json({ message: "Proveedor guardado" });
+    await pool.query("INSERT INTO categoria set ?", [req.body], (err) => {
+      if (err) {
+        res.status(500).json(err);
+        return;
       }
-    );
+      res.json({ message: "Categoria guardada" });
+    });
   }
 
   public async delete(req: Request, res: Response): Promise<any> {
     const { id } = req.params;
     await pool.query(
-      "DELETE FROM provedor WHERE id = ?",
+      "DELETE FROM categoria WHERE id = ?",
       [id],
       (err, result, fields) => {
         if (err) {
-          throw err;
+          res.status(500).json(err);
+          return;
         }
-        res.json({ message: "Proveedor eliminado" });
+        res.json({ message: "Categoria eliminada" });
       }
     );
   }
@@ -53,16 +54,17 @@ class proveedoresController {
   public async update(req: Request, res: Response): Promise<any> {
     const { id } = req.params;
     await pool.query(
-      "UPDATE provedor SET ? WHERE id = ?",
+      "UPDATE categoria SET ? WHERE id = ?",
       [req.body, id],
       (err, result, fields) => {
         if (err) {
-          throw err;
+          res.status(500).json(err);
+          return;
         }
-        res.json({ message: "El proveedor fue actualizado" });
+        res.json({ message: "La categoria fue actualizada" });
       }
     );
   }
 }
 
-export const proveedoresControler = new proveedoresController();
+export const categoriaController = new CategoriasController();

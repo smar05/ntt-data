@@ -3,8 +3,11 @@ import pool from "../database/pool";
 
 class VehiculosController {
   public async list(req: Request, res: Response): Promise<any> {
-    await pool.query("SELECT * FROM provedor", (err, result, fields) => {
-      if (err) throw err;
+    await pool.query("SELECT * FROM vehiculo", (err, result, fields) => {
+      if (err) {
+        res.status(500).json(err);
+        return;
+      }
       res.json(result);
     });
   }
@@ -12,7 +15,7 @@ class VehiculosController {
   public async getOne(req: Request, res: Response): Promise<any> {
     const { id } = req.params;
     await pool.query(
-      "SELECT * FROM provedor WHERE id = ?",
+      "SELECT * FROM vehiculo WHERE id = ?",
       [id],
       (err, result, fields) => {
         if (result.length > 0) {
@@ -24,18 +27,24 @@ class VehiculosController {
   }
 
   public async create(req: Request, res: Response): Promise<void> {
-    await pool.query("INSERT INTO provedor set ?", [req.body]);
-    res.json({ message: "Proveedor guardado" });
+    await pool.query("INSERT INTO vehiculo set ?", [req.body], (err) => {
+      if (err) {
+        res.status(500).json(err);
+        return;
+      }
+      res.json({ message: "Proveedor guardado" });
+    });
   }
 
   public async delete(req: Request, res: Response): Promise<any> {
     const { id } = req.params;
     await pool.query(
-      "DELETE FROM provedor WHERE id = ?",
+      "DELETE FROM vehiculo WHERE id = ?",
       [id],
       (err, result, fields) => {
         if (err) {
-          throw err;
+          res.status(500).json(err);
+          return;
         }
         res.json({ message: "Proveedor eliminado" });
       }
@@ -45,11 +54,12 @@ class VehiculosController {
   public async update(req: Request, res: Response): Promise<any> {
     const { id } = req.params;
     await pool.query(
-      "UPDATE provedor SET ? WHERE id = ?",
+      "UPDATE vehiculo SET ? WHERE id = ?",
       [req.body, id],
       (err, result, fields) => {
         if (err) {
-          throw err;
+          res.status(500).json(err);
+          return;
         }
         res.json({ message: "El proveedor fue actualizado" });
       }

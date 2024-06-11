@@ -1,0 +1,119 @@
+<div class="col-md-4 offset-md-2">
+  <div class="card">
+    <div class="card-body">
+      <form [formGroup]="f">
+        <div class="form-group">
+          <input
+            type="text"
+            name="placa"
+            placeholder="Placa"
+            class="form-control"
+            autofocus
+            formControlName="placa"
+            minlength="6"
+            maxlength="6"
+            required
+            [ngClass]="{
+              'is-invalid': placa.invalid
+            }"
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            name="modelo"
+            placeholder="Modelo"
+            class="form-control"
+            formControlName="modelo"
+            required
+            maxlength="50"
+            [ngClass]="{
+              'is-invalid': modelo.invalid
+            }"
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            name="marca"
+            placeholder="Marca"
+            class="form-control"
+            formControlName="marca"
+            required
+            maxlength="50"
+            [ngClass]="{
+              'is-invalid': marca.invalid
+            }"
+          />
+        </div>
+        <div class="form-group">
+          <label for="estado" class="form-label">Estado</label>
+          <select
+            name="estado"
+            class="form-select mb-2"
+            formControlName="estado"
+            required
+            [ngClass]="{
+              'is-invalid': estado.invalid
+            }"
+            style="width: 100%"
+          >
+            <option value="Nuevo">Nuevo</option>
+            <option value="Usado">Usado</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="categoria" class="form-label">Categoria</label>
+          <select
+            name="categoria"
+            class="form-select mb-2"
+            formControlName="id_categoria"
+            required
+            [ngClass]="{
+              'is-invalid': id_categoria.invalid
+            }"
+            style="width: 100%"
+          >
+            <option
+              *ngFor="let categoria of this.categorias"
+              [value]="categoria.id"
+            >
+              {{ categoria.nombre }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <textarea
+            type="text"
+            name="descripcion"
+            placeholder="Descripcion"
+            class="form-control"
+            formControlName="descripcion"
+            maxlength="200"
+            [ngClass]="{
+              'is-invalid': descripcion.invalid
+            }"
+          ></textarea>
+        </div>
+        <button
+          (click)="saveVehiculo()"
+          class="btn btn-success btn-block"
+          [disabled]="this.f.invalid"
+        >
+          Guardar
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-4">
+  <div class="card card-body text-center">
+    <h3>Placa: {{ this.placa.value }}</h3>
+    <p>Modelo: {{ modelo.value }}</p>
+    <p>Marca: {{ marca.value }}</p>
+    <p>Marca: {{ estado.value }}</p>
+    <p>Categoria: {{ this.getCategoriaName(id_categoria.value) }}</p>
+    <p>Descripcion: {{ descripcion.value }}</p>
+  </div>
+</div>
