@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IVehiculo } from 'src/app/interface/i-vehiculo';
+import { VehiculosService } from 'src/app/services/vehiculos.service';
 
 @Component({
   selector: 'app-vehiculos-list',
@@ -7,40 +8,29 @@ import { IVehiculo } from 'src/app/interface/i-vehiculo';
   styleUrls: ['./vehiculos-list.component.css'],
 })
 export class VehiculosListComponent {
-  public vehiculos: IVehiculo[] = [
-    {
-      id: '1',
-      placa: 'placa',
-      modelo: 'modelo',
-      marca: 'marca',
-      estado: 'Nuevo',
-      fecha: new Date(),
-      descripcion: '',
-    },
-  ];
+  public vehiculos: IVehiculo[] = [];
 
-  constructor() {}
+  constructor(private vehiculosService: VehiculosService) {}
 
   ngOnInit(): void {
     this.getVehiculos();
   }
 
-  getVehiculos() {
-    /*this.proveedoresService.getProveedores().subscribe(
-      (res) => {
-        this.proveedores = res;
+  private getVehiculos(): void {
+    this.vehiculosService.getVehiculos().subscribe(
+      (res: IVehiculo[]) => {
+        this.vehiculos = res;
       },
       (err) => console.error(err)
-    );*/
+    );
   }
 
-  deleteVehiculo(id: string) {
-    /*this.proveedoresService.deleteProveedor(id).subscribe(
+  deleteVehiculo(id: number) {
+    this.vehiculosService.deleteVehiculo(id).subscribe(
       (res) => {
-        console.log(res);
-        this.getProveedores();
+        this.getVehiculos();
       },
       (err) => console.error(err)
-    );*/
+    );
   }
 }

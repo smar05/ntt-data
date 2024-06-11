@@ -9,7 +9,7 @@ import { IVehiculo } from 'src/app/interface/i-vehiculo';
 })
 export class VehiculosFormComponent {
   public vehiculo: IVehiculo = {
-    id: '0',
+    id: 0,
     placa: '',
     marca: '',
     modelo: '',
