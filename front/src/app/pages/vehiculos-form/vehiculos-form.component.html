@@ -1,7 +1,7 @@
 <div class="col-md-4 offset-md-2">
   <div class="card">
     <div class="card-body">
-      <form>
+      <form [formGroup]="f">
         <div class="form-group">
           <input
             type="text"
@@ -9,6 +9,13 @@
             placeholder="Placa"
             class="form-control"
             autofocus
+            formControlName="placa"
+            minlength="6"
+            maxlength="6"
+            required
+            [ngClass]="{
+              'is-invalid': placa.invalid
+            }"
           />
         </div>
         <div class="form-group">
@@ -17,6 +24,12 @@
             name="modelo"
             placeholder="Modelo"
             class="form-control"
+            formControlName="modelo"
+            required
+            maxlength="50"
+            [ngClass]="{
+              'is-invalid': modelo.invalid
+            }"
           />
         </div>
         <div class="form-group">
@@ -25,22 +38,28 @@
             name="marca"
             placeholder="Marca"
             class="form-control"
+            formControlName="marca"
+            required
+            maxlength="50"
+            [ngClass]="{
+              'is-invalid': marca.invalid
+            }"
           />
         </div>
         <div class="">
           <label for="estado" class="form-label">Estado</label>
-          <select name="estado" class="form-select mx-2">
+          <select
+            name="estado"
+            class="form-select mx-2"
+            formControlName="estado"
+            required
+            [ngClass]="{
+              'is-invalid': estado.invalid
+            }"
+          >
             <option value="">Nuevo</option>
             <option value="">Usado</option>
           </select>
-        </div>
-        <div class="form-group">
-          <input
-            type="text"
-            name="Marca"
-            placeholder="Marca"
-            class="form-control"
-          />
         </div>
         <div class="form-group">
           <textarea
@@ -48,11 +67,17 @@
             name="descripcion"
             placeholder="Descripcion"
             class="form-control"
+            formControlName="descripcion"
+            maxlength="200"
+            [ngClass]="{
+              'is-invalid': descripcion.invalid
+            }"
           ></textarea>
         </div>
         <button
           (click)="edit ? updateVehiculo() : saveNewVehiculo()"
           class="btn btn-success btn-block"
+          [disabled]="this.f.invalid"
         >
           Guardar
         </button>
@@ -63,9 +88,10 @@
 
 <div class="col-md-4">
   <div class="card card-body text-center">
-    <h3>Placa: {{ vehiculo.placa }}</h3>
-    <p>Modelo: {{ vehiculo.modelo }}</p>
-    <p>Marca: {{ vehiculo.marca }}</p>
-    <p>Descripcion: {{ vehiculo.descripcion }}</p>
+    <h3>Placa: {{ this.placa.value }}</h3>
+    <p>Modelo: {{ modelo.value }}</p>
+    <p>Marca: {{ marca.value }}</p>
+    <p>Marca: {{ estado.value }}</p>
+    <p>Descripcion: {{ descripcion.value }}</p>
   </div>
 </div>
