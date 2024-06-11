@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { EnumRutas } from 'src/app/enums/enums-rutas';
 import { VehiculosListComponent } from './vehiculos-list/vehiculos-list.component';
 import { VehiculosFormComponent } from './vehiculos-form/vehiculos-form.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: `${EnumRutas.VEHICULOS}/${EnumRutas.EDIT_VEHICULOS}/:id`,
     component: VehiculosFormComponent,
+  },
+  {
+    path: `${EnumRutas.LOGIN}`,
+    component: LoginComponent,
   },
 ];
 
