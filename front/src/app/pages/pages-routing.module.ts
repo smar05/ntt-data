@@ -1,17 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { EnumRutas } from 'src/app/enums/enums-rutas';
+import { VehiculosListComponent } from './vehiculos-list/vehiculos-list.component';
 
 const routes: Routes = [
   {
-    path: EnumRutas.HOME,
-    redirectTo: `/${EnumRutas.LISTADO_VEHICULOS}`,
-    pathMatch: 'full',
-  },
-  {
-    path: '**',
-    redirectTo: `/${EnumRutas.LISTADO_VEHICULOS}`,
-    pathMatch: 'full',
+    path: EnumRutas.LISTADO_VEHICULOS,
+    component: VehiculosListComponent,
   },
 ];
 
@@ -19,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class PagesRoutingModule {}
