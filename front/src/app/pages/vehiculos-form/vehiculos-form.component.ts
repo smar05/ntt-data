@@ -6,7 +6,9 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { EnumRutas } from 'src/app/enums/enums-rutas';
+import { ICategoria } from 'src/app/interface/i-categoria';
 import { IVehiculo } from 'src/app/interface/i-vehiculo';
+import { CategoriasService } from 'src/app/services/categorias.service';
 import { VehiculosService } from 'src/app/services/vehiculos.service';
 
 @Component({
@@ -23,6 +25,7 @@ export class VehiculosFormComponent {
     estado: 'Nuevo',
     fecha: null as any,
     descripcion: '',
+    id_categoria: null as any,
   };
 
   //Grupo de controles
@@ -47,6 +50,15 @@ export class VehiculosFormComponent {
     ],
     estado: ['', { validators: [Validators.required] }],
     descripcion: ['', { validators: [Validators.maxLength(200)] }],
+    id_categoria: [
+      '',
+      {
+        validators: [
+          Validators.required,
+          Validators.pattern(/^\d{1,3}( \d{3})*$/),
+        ],
+      },
+    ],
   });
 
   get placa() {
@@ -69,17 +81,24 @@ export class VehiculosFormComponent {
     return this.f.controls['descripcion'];
   }
 
+  get id_categoria() {
+    return this.f.controls['id_categoria'];
+  }
+
   private edit: boolean = false;
+  public categorias: ICategoria[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private form: UntypedFormBuilder,
     private vehiculoService: VehiculosService,
-    private router: Router
+    private router: Router,
+    private categoriasService: CategoriasService
   ) {}
 
   ngOnInit(): void {
     const params: Params = this.activatedRoute.snapshot.params;
+    this.getCategorias();
     if (params['id']) {
       this.vehiculoService.getVehiculo(params['id']).subscribe(
         (res: IVehiculo | any) => {
@@ -89,11 +108,25 @@ export class VehiculosFormComponent {
           this.f.controls['modelo'].setValue(res.modelo);
           this.f.controls['estado'].setValue(res.estado);
           this.f.controls['descripcion'].setValue(res.descripcion);
+          this.f.controls['id_categoria'].setValue(res.id_categoria);
           this.edit = true;
         },
         (err) => console.error(err)
       );
     }
+  }
+
+  private getCategorias(): void {
+    this.categoriasService.getCategorias().subscribe((res: ICategoria[]) => {
+      this.categorias = res;
+    });
+  }
+
+  public getCategoriaName(id: number): string {
+    return (
+      this.categorias.find((categoria: ICategoria) => categoria.id === id)
+        ?.nombre || ''
+    );
   }
 
   public saveVehiculo(): void {
@@ -111,6 +144,7 @@ export class VehiculosFormComponent {
         placa: this.placa.value,
         estado: this.estado.value,
         fecha: this.vehiculo.fecha.split('T')[0],
+        id_categoria: this.id_categoria.value,
       };
 
       this.vehiculoService.putVehiculo(vehiculoData.id, vehiculoData).subscribe(
@@ -128,6 +162,7 @@ export class VehiculosFormComponent {
         placa: this.placa.value,
         estado: this.estado.value,
         fecha: new Date().toISOString().split('T')[0],
+        id_categoria: this.id_categoria.value,
       } as any;
 
       this.vehiculoService.postVehiculo(vehiculoData).subscribe(

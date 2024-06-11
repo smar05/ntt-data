@@ -1,5 +1,5 @@
 <div class="col-md-4" *ngFor="let vehiculo of vehiculos">
-  <div class="card text-center">
+  <div class="card text-center mb-2">
     <div
       class="card-header bg-dark text-white d-flex justify-content-between align-center"
     >
@@ -11,6 +11,7 @@
     <div class="card-body">
       <p>Modelo: {{ vehiculo.modelo }}</p>
       <p>Placa: {{ vehiculo.placa }}</p>
+      <p>Categoria: {{ this.getCategoriaName(vehiculo.id_categoria) }}</p>
       <p>Fecha: {{ vehiculo.fecha | date : "yyyy-MM-dd" }}</p>
       <a
         [routerLink]="['/vehiculos/edit', vehiculo.id]"

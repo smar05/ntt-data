@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { ICategoria } from 'src/app/interface/i-categoria';
 import { IVehiculo } from 'src/app/interface/i-vehiculo';
+import { CategoriasService } from 'src/app/services/categorias.service';
 import { VehiculosService } from 'src/app/services/vehiculos.service';
 
 @Component({
@@ -9,10 +11,15 @@ import { VehiculosService } from 'src/app/services/vehiculos.service';
 })
 export class VehiculosListComponent {
   public vehiculos: IVehiculo[] = [];
+  public categorias: ICategoria[] = [];
 
-  constructor(private vehiculosService: VehiculosService) {}
+  constructor(
+    private vehiculosService: VehiculosService,
+    private categoriasService: CategoriasService
+  ) {}
 
   ngOnInit(): void {
+    this.getCategorias();
     this.getVehiculos();
   }
 
@@ -31,6 +38,19 @@ export class VehiculosListComponent {
         this.getVehiculos();
       },
       (err) => console.error(err)
+    );
+  }
+
+  private getCategorias(): void {
+    this.categoriasService.getCategorias().subscribe((res: ICategoria[]) => {
+      this.categorias = res;
+    });
+  }
+
+  public getCategoriaName(id: number): string {
+    return (
+      this.categorias.find((categoria: ICategoria) => categoria.id === id)
+        ?.nombre || ''
     );
   }
 }

@@ -46,19 +46,40 @@
             }"
           />
         </div>
-        <div class="">
+        <div class="form-group">
           <label for="estado" class="form-label">Estado</label>
           <select
             name="estado"
-            class="form-select mx-2"
+            class="form-select mb-2"
             formControlName="estado"
             required
             [ngClass]="{
               'is-invalid': estado.invalid
             }"
+            style="width: 100%"
           >
             <option value="Nuevo">Nuevo</option>
             <option value="Usado">Usado</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="categoria" class="form-label">Categoria</label>
+          <select
+            name="categoria"
+            class="form-select mb-2"
+            formControlName="id_categoria"
+            required
+            [ngClass]="{
+              'is-invalid': id_categoria.invalid
+            }"
+            style="width: 100%"
+          >
+            <option
+              *ngFor="let categoria of this.categorias"
+              [value]="categoria.id"
+            >
+              {{ categoria.nombre }}
+            </option>
           </select>
         </div>
         <div class="form-group">
@@ -92,6 +113,7 @@
     <p>Modelo: {{ modelo.value }}</p>
     <p>Marca: {{ marca.value }}</p>
     <p>Marca: {{ estado.value }}</p>
+    <p>Categoria: {{ this.getCategoriaName(id_categoria.value) }}</p>
     <p>Descripcion: {{ descripcion.value }}</p>
   </div>
 </div>

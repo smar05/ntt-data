@@ -6,4 +6,5 @@ export interface IVehiculo {
   fecha: string;
   marca: string;
   descripcion: string;
+  id_categoria: number;
 }
