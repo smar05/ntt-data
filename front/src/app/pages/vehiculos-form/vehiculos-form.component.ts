@@ -6,6 +6,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { IVehiculo } from 'src/app/interface/i-vehiculo';
+import { VehiculosService } from 'src/app/services/vehiculos.service';
 
 @Component({
   selector: 'app-vehiculos-form',
@@ -13,7 +14,7 @@ import { IVehiculo } from 'src/app/interface/i-vehiculo';
   styleUrls: ['./vehiculos-form.component.css'],
 })
 export class VehiculosFormComponent {
-  public vehiculo: IVehiculo = {
+  private vehiculo: IVehiculo = {
     id: 0,
     placa: '',
     marca: '',
@@ -71,19 +72,25 @@ export class VehiculosFormComponent {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private form: UntypedFormBuilder
+    private form: UntypedFormBuilder,
+    private vehiculoService: VehiculosService
   ) {}
 
   ngOnInit(): void {
     const params: Params = this.activatedRoute.snapshot.params;
     if (params['id']) {
-      /*this.proveedoresService.getProveedor(params.id).subscribe(
-        (res) => {
-          this.proveedor = res;
+      this.vehiculoService.getVehiculo(params['id']).subscribe(
+        (res: IVehiculo | any) => {
+          this.vehiculo = res;
+          this.f.controls['placa'].setValue(res.placa);
+          this.f.controls['marca'].setValue(res.marca);
+          this.f.controls['modelo'].setValue(res.modelo);
+          this.f.controls['estado'].setValue(res.estado);
+          this.f.controls['descripcion'].setValue(res.descripcion);
           this.edit = true;
         },
         (err) => console.error(err)
-      );*/
+      );
     }
   }
 

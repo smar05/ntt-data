@@ -31,4 +31,15 @@ export class VehiculosService {
   public deleteVehiculo(id: number): Observable<any> {
     return this.httpService.delete(`${this.url}/${id}`);
   }
+
+  /**
+   * Obtener un vehiculo por id
+   *
+   * @param {number} id
+   * @return {*}  {Observable<IVehiculo[]>}
+   * @memberof VehiculosService
+   */
+  public getVehiculo(id: number): Observable<IVehiculo[] | IVehiculo> {
+    return this.httpService.get(`${this.url}/${id}`);
+  }
 }
