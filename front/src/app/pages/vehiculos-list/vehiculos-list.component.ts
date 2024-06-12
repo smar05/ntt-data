@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Alerts } from 'src/app/helpers/alerts';
 import { ICategoria } from 'src/app/interface/i-categoria';
 import { IVehiculo } from 'src/app/interface/i-vehiculo';
 import { CategoriasService } from 'src/app/services/categorias.service';
@@ -28,7 +29,13 @@ export class VehiculosListComponent {
       (res: IVehiculo[]) => {
         this.vehiculos = res;
       },
-      (err) => console.error(err)
+      (err) => {
+        Alerts.basicAlert(
+          'Error',
+          'Ha ocurrido un error consultando la informacion',
+          'error'
+        );
+      }
     );
   }
 
@@ -37,14 +44,29 @@ export class VehiculosListComponent {
       (res) => {
         this.getVehiculos();
       },
-      (err) => console.error(err)
+      (err) => {
+        Alerts.basicAlert(
+          'Error',
+          'Ha ocurrido un error eliminando el item',
+          'error'
+        );
+      }
     );
   }
 
   private getCategorias(): void {
-    this.categoriasService.getCategorias().subscribe((res: ICategoria[]) => {
-      this.categorias = res;
-    });
+    this.categoriasService.getCategorias().subscribe(
+      (res: ICategoria[]) => {
+        this.categorias = res;
+      },
+      (err) => {
+        Alerts.basicAlert(
+          'Error',
+          'Ha ocurrido un error consultado las categorias',
+          'error'
+        );
+      }
+    );
   }
 
   public getCategoriaName(id: number): string {

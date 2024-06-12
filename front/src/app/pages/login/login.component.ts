@@ -7,6 +7,7 @@ import {
 import { Router } from '@angular/router';
 import { EnumLocalStorage } from 'src/app/enums/enums-localstorage';
 import { EnumRutas } from 'src/app/enums/enums-rutas';
+import { Alerts } from 'src/app/helpers/alerts';
 import { ILogin } from 'src/app/interface/i-login';
 import { LoginService } from 'src/app/services/login.service';
 
@@ -74,7 +75,13 @@ export class LoginComponent implements OnInit {
         localStorage.setItem(EnumLocalStorage.TOKEN, res.token);
         this.router.navigate([`/${EnumRutas.VEHICULOS}`]);
       },
-      (err) => {}
+      (err) => {
+        Alerts.basicAlert('Error', 'Ha ocurrido un error', 'error');
+      }
     );
+  }
+
+  public goRegister(): void {
+    this.router.navigate([`/${EnumRutas.REGISTER}`]);
   }
 }

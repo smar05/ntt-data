@@ -6,6 +6,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { EnumRutas } from 'src/app/enums/enums-rutas';
+import { Alerts } from 'src/app/helpers/alerts';
 import { ICategoria } from 'src/app/interface/i-categoria';
 import { IVehiculo } from 'src/app/interface/i-vehiculo';
 import { CategoriasService } from 'src/app/services/categorias.service';
@@ -111,15 +112,30 @@ export class VehiculosFormComponent {
           this.f.controls['id_categoria'].setValue(res.id_categoria);
           this.edit = true;
         },
-        (err) => console.error(err)
+        (err) => {
+          Alerts.basicAlert(
+            'Error',
+            'Ha ocurrido un error consultando el vehiculo',
+            'error'
+          );
+        }
       );
     }
   }
 
   private getCategorias(): void {
-    this.categoriasService.getCategorias().subscribe((res: ICategoria[]) => {
-      this.categorias = res;
-    });
+    this.categoriasService.getCategorias().subscribe(
+      (res: ICategoria[]) => {
+        this.categorias = res;
+      },
+      (err) => {
+        Alerts.basicAlert(
+          'Error',
+          'Ha ocurrido un error consultando las categorias',
+          'error'
+        );
+      }
+    );
   }
 
   public getCategoriaName(id: number): string {
@@ -151,7 +167,13 @@ export class VehiculosFormComponent {
         (res) => {
           this.router.navigate([`/${EnumRutas.HOME}`]);
         },
-        (err) => console.error(err)
+        (err) => {
+          Alerts.basicAlert(
+            'Error',
+            'Ha ocurrido un error actualizando',
+            'error'
+          );
+        }
       );
     } else {
       // Guardar nuevo vehiculo
@@ -169,7 +191,9 @@ export class VehiculosFormComponent {
         (res) => {
           this.router.navigate([`/${EnumRutas.HOME}`]);
         },
-        (err) => console.error(err)
+        (err) => {
+          Alerts.basicAlert('Error', 'Ha ocurrido un error guardando', 'error');
+        }
       );
     }
   }

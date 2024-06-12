@@ -48,7 +48,7 @@
               minlength="8"
               maxlength="20"
               [ngClass]="{
-                'is-invalid': confirmPassword.invalid && !this.equalPassword()
+                'is-invalid': confirmPassword.invalid || !this.equalPassword()
               }"
             />
           </div>

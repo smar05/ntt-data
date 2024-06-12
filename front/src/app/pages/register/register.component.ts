@@ -7,6 +7,7 @@ import {
 import { Router } from '@angular/router';
 import { EnumLocalStorage } from 'src/app/enums/enums-localstorage';
 import { EnumRutas } from 'src/app/enums/enums-rutas';
+import { Alerts } from 'src/app/helpers/alerts';
 import { IRegister } from 'src/app/interface/i-register';
 import { LoginService } from 'src/app/services/login.service';
 
@@ -96,9 +97,12 @@ export class RegisterComponent implements OnInit {
 
     this.loginService.register(register).subscribe(
       (res: any) => {
+        Alerts.basicAlert('OK', 'Registro exitoso', 'success');
         this.goBack();
       },
-      (err) => {}
+      (err) => {
+        Alerts.basicAlert('Error', 'Ha ocurrido un error', 'error');
+      }
     );
   }
 }
