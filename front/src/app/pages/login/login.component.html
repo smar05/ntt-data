@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-body">
         <h3 class="card-title text-center">Login</h3>
-        <form>
+        <form [formGroup]="f">
           <div class="form-group">
             <label for="username">Username</label>
             <input
@@ -12,6 +12,12 @@
               id="username"
               placeholder="Enter username"
               required
+              minlength="6"
+              maxlength="20"
+              formControlName="username"
+              [ngClass]="{
+                'is-invalid': username.invalid
+              }"
             />
           </div>
           <div class="form-group">
@@ -22,9 +28,22 @@
               id="password"
               placeholder="Enter password"
               required
+              minlength="8"
+              maxlength="20"
+              formControlName="password"
+              [ngClass]="{
+                'is-invalid': password.invalid
+              }"
             />
           </div>
-          <button type="submit" class="btn btn-primary btn-block">Login</button>
+          <button
+            type="button"
+            class="btn btn-primary btn-block"
+            [disabled]="this.f.invalid"
+            (click)="this.login()"
+          >
+            Login
+          </button>
         </form>
       </div>
     </div>

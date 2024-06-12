@@ -19,9 +19,15 @@ class LoginController {
     const SECRET_KEY: string = "SECRET_KEY";
     const { username, password }: { username: string; password: string } =
       req.body;
-    const user: IUsuario = (
-      await axios.get(`http://localhost:3000/usuarios/username/${username}`)
-    ).data;
+    let user: IUsuario = null as any;
+
+    try {
+      user = (
+        await axios.get(`http://localhost:3000/usuarios/username/${username}`)
+      ).data;
+    } catch (error) {
+      res.status(401).send("Usuario no encontrado");
+    }
 
     if (user && (await bcrypt.compare(password, user.password))) {
       const token = jwt.sign({ username: user.username }, SECRET_KEY, {
