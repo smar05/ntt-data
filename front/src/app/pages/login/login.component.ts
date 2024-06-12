@@ -57,7 +57,9 @@ export class LoginComponent implements OnInit {
     private router: Router
   ) {}
 
-  public ngOnInit(): void {}
+  public ngOnInit(): void {
+    localStorage.removeItem(EnumLocalStorage.TOKEN);
+  }
 
   public login(): void {
     if (this.f.invalid) return;

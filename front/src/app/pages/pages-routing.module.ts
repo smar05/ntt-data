@@ -5,18 +5,22 @@ import { VehiculosListComponent } from './vehiculos-list/vehiculos-list.componen
 import { VehiculosFormComponent } from './vehiculos-form/vehiculos-form.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { AuthGuard } from '../guards/auth.guard';
 
 const routes: Routes = [
   {
     path: EnumRutas.VEHICULOS,
+    canActivate: [AuthGuard],
     component: VehiculosListComponent,
   },
   {
     path: `${EnumRutas.VEHICULOS}/${EnumRutas.ADD_VEHICULOS}`,
+    canActivate: [AuthGuard],
     component: VehiculosFormComponent,
   },
   {
     path: `${EnumRutas.VEHICULOS}/${EnumRutas.EDIT_VEHICULOS}/:id`,
+    canActivate: [AuthGuard],
     component: VehiculosFormComponent,
   },
   {

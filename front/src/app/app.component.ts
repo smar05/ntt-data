@@ -22,7 +22,6 @@ export class AppComponent implements OnInit {
   }
 
   private checkRoute(url: string): void {
-    console.log('🚀 ~ AppComponent ~ checkRoute ~ url:', url);
     this.showNavbar = !(
       url.includes(`/${EnumRutas.LOGIN}`) ||
       url.includes(`/${EnumRutas.REGISTER}`)

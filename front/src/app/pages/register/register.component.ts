@@ -5,6 +5,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { EnumLocalStorage } from 'src/app/enums/enums-localstorage';
 import { EnumRutas } from 'src/app/enums/enums-rutas';
 import { IRegister } from 'src/app/interface/i-register';
 import { LoginService } from 'src/app/services/login.service';
@@ -73,7 +74,9 @@ export class RegisterComponent implements OnInit {
     private loginService: LoginService
   ) {}
 
-  public ngOnInit(): void {}
+  public ngOnInit(): void {
+    localStorage.removeItem(EnumLocalStorage.TOKEN);
+  }
 
   public goBack(): void {
     this.router.navigate([`/${EnumRutas.LOGIN}`]);
