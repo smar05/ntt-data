@@ -19,6 +19,18 @@ CREATE TABLE categoria(
     nombre VARCHAR(18)
 );
 
+INSERT INTO `datosprovedores`.`categoria`
+(`nombre`)
+VALUES
+(
+'Moto');
+
+INSERT INTO `datosprovedores`.`categoria`
+(`nombre`)
+VALUES
+(
+'Carro');
+
 ALTER TABLE `datosprovedores`.`vehiculo` 
 ADD COLUMN `id_categoria` INT(11) NULL AFTER `descripcion`,
 ADD INDEX `fk_vehiculo_categoria_idx` (`id_categoria` ASC) VISIBLE;
@@ -29,3 +41,9 @@ ADD CONSTRAINT `fk_vehiculo_categoria`
   REFERENCES `datosprovedores`.`categoria` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
+
+CREATE TABLE usuarios(
+    id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(18),
+    password VARCHAR(120)
+);

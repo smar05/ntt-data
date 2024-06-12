@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { vehiculosController } from "../controllers/vehiculos.controler";
+import { usuariosController } from "../controllers/usuarios.controller";
 
-class VehiculosRoutes {
+class UsuariosRoutes {
   public router: Router = Router();
 
   constructor() {
@@ -11,12 +11,12 @@ class VehiculosRoutes {
   config(): void {
     /**
      * @swagger
-     * /vehiculos:
+     * /usuarios:
      *   get:
-     *     summary: Obtener detalles de los vehiculos
+     *     summary: Obtener detalles de los usuarios
      *     responses:
      *       200:
-     *         description: Detalles del vehiculo obtenidos exitosamente
+     *         description: Detalles del usuario obtenidos exitosamente
      *         content:
      *           application/json:
      *             schema:
@@ -41,23 +41,23 @@ class VehiculosRoutes {
      *       500:
      *         description: Error interno del servidor
      */
-    this.router.get("/", vehiculosController.list);
+    this.router.get("/", usuariosController.list);
     /**
      * @swagger
-     * /vehiculos/{vehiculoId}:
+     * /usuarios/{id}:
      *   get:
-     *     summary: Obtener detalles del vehiculo
-     *     description: Obtiene los detalles de un vehiculo por ID
+     *     summary: Obtener detalles del usuario
+     *     description: Obtiene los detalles de un usuario por ID
      *     parameters:
      *       - in: path
-     *         name: vehiculoId
+     *         name: id
      *         schema:
      *           type: number
      *         required: true
-     *         description: ID del vehiculo
+     *         description: ID del usuario
      *     responses:
      *       200:
-     *         description: Detalles del vehiculo obtenidos exitosamente
+     *         description: Detalles del usuario obtenidos exitosamente
      *         content:
      *           application/json:
      *             schema:
@@ -65,30 +65,52 @@ class VehiculosRoutes {
      *               properties:
      *                 id:
      *                   type: number
-     *                 placa:
+     *                 username:
      *                   type: string
-     *                 modelo:
+     *                 password:
      *                   type: string
-     *                 estado:
-     *                    type: string
-     *                 fecha:
-     *                   type: string
-     *                 marca:
-     *                    type: string
-     *                 descripcion:
-     *                    type: string
-     *                 id_categoria:
-     *                    type: number
      *       500:
      *         description: Error interno del servidor
      */
-    this.router.get("/:id", vehiculosController.getOne);
+    this.router.get("/:id", usuariosController.getOne);
+
     /**
      * @swagger
-     * /vehiculos:
+     * /usuarios/username/{username}:
+     *   get:
+     *     summary: Obtener detalles del usuario
+     *     description: Obtiene los detalles de un usuario por username
+     *     parameters:
+     *       - in: path
+     *         name: username
+     *         schema:
+     *           type: string
+     *         required: true
+     *         description: username del usuario
+     *     responses:
+     *       200:
+     *         description: Detalles del usuario obtenidos exitosamente
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 id:
+     *                   type: number
+     *                 username:
+     *                   type: string
+     *                 password:
+     *                   type: string
+     *       500:
+     *         description: Error interno del servidor
+     */
+    this.router.get("/username/:username", usuariosController.getOneByUsername);
+    /**
+     * @swagger
+     * /usuarios:
      *   post:
-     *     summary: Crear un nuevo vehiculo
-     *     description: Crea un nuevo vehiculo con los datos proporcionados
+     *     summary: Crear un nuevo usuario
+     *     description: Crea un nuevo usuario con los datos proporcionados
      *     requestBody:
      *       required: true
      *       content:
@@ -98,23 +120,13 @@ class VehiculosRoutes {
      *             required:
      *               - all
      *             properties:
-     *               placa:
+     *               username:
      *                 type: string
-     *               modelo:
-     *                 type: number
-     *               estado:
-     *                 type: string
-     *               fecha:
-     *                 type: string
-     *               marca:
-     *                 type: string
-     *               descripcion:
-     *                 type: string
-     *               id_categoria:
+     *               password:
      *                 type: number
      *     responses:
      *       201:
-     *         description: Vehiculo creado exitosamente
+     *         description: usuario creado exitosamente
      *         content:
      *           application/json:
      *             schema:
@@ -124,23 +136,23 @@ class VehiculosRoutes {
      *       500:
      *         description: Error interno del servidor
      */
-    this.router.post("/", vehiculosController.create);
+    this.router.post("/", usuariosController.create);
     /**
      * @swagger
-     * /vehiculos/{vehiculoId}:
+     * /usuarios/{id}:
      *   delete:
-     *     summary: Eliminar un vehiculo
-     *     description: Elimina un vehiculo por su ID
+     *     summary: Eliminar un usuario
+     *     description: Elimina un usuario por su ID
      *     parameters:
      *       - in: path
-     *         name: vehiculoId
+     *         name: id
      *         schema:
      *           type: number
      *         required: true
-     *         description: ID del vehiculo a eliminar
+     *         description: ID del usuario a eliminar
      *     responses:
      *       200:
-     *         description: Vehiculo eliminado exitosamente
+     *         description: usuario eliminado exitosamente
      *         content:
      *           application/json:
      *             schema:
@@ -148,26 +160,26 @@ class VehiculosRoutes {
      *               properties:
      *                 message:
      *                   type: string
-     *                   example: Vehiculo eliminado exitosamente
+     *                   example: usuario eliminado exitosamente
      *       404:
-     *         description: Vehiculo no encontrado
+     *         description: usuario no encontrado
      *       500:
      *         description: Error interno del servidor
      */
-    this.router.delete("/:id", vehiculosController.delete);
+    this.router.delete("/:id", usuariosController.delete);
     /**
      * @swagger
-     * /vehiculos/{vehiculoId}:
+     * /usuarios/{id}:
      *   put:
-     *     summary: Actualizar un vehiculo
-     *     description: Actualiza los detalles de un vehiculo por su ID
+     *     summary: Actualizar un usuario
+     *     description: Actualiza los detalles de un usuario por su ID
      *     parameters:
      *       - in: path
-     *         name: vehiculoId
+     *         name: id
      *         schema:
      *           type: number
      *         required: true
-     *         description: ID del vehiculo a actualizar
+     *         description: ID del usuario a actualizar
      *     requestBody:
      *       required: true
      *       content:
@@ -177,23 +189,13 @@ class VehiculosRoutes {
      *             required:
      *               - all
      *             properties:
-     *               placa:
+     *               username:
      *                 type: string
-     *               modelo:
-     *                 type: number
-     *               estado:
-     *                 type: string
-     *               fecha:
-     *                 type: string
-     *               marca:
-     *                 type: string
-     *               descripcion:
-     *                 type: string
-     *               id_categoria:
+     *               password:
      *                 type: number
      *     responses:
      *       200:
-     *         description: Vehiculo actualizado exitosamente
+     *         description: usuario actualizado exitosamente
      *         content:
      *           application/json:
      *             schema:
@@ -205,9 +207,9 @@ class VehiculosRoutes {
      *       500:
      *         description: Error interno del servidor
      */
-    this.router.put("/:id", vehiculosController.update);
+    this.router.put("/:id", usuariosController.update);
   }
 }
 
-const vehiculosRoutes = new VehiculosRoutes();
-export default vehiculosRoutes.router;
+const usuariosRoutes = new UsuariosRoutes();
+export default usuariosRoutes.router;

@@ -1,0 +1,74 @@
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title text-center">Register</h3>
+        <form id="registerForm" [formGroup]="f">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              class="form-control"
+              id="username"
+              placeholder="Enter username"
+              required
+              formControlName="username"
+              minlength="6"
+              maxlength="20"
+              [ngClass]="{
+                'is-invalid': username.invalid
+              }"
+            />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              placeholder="Enter password"
+              required
+              formControlName="password"
+              minlength="8"
+              maxlength="20"
+              [ngClass]="{
+                'is-invalid': password.invalid
+              }"
+            />
+          </div>
+          <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="confirmPassword"
+              placeholder="Confirm password"
+              required
+              formControlName="confirmPassword"
+              minlength="8"
+              maxlength="20"
+              [ngClass]="{
+                'is-invalid': confirmPassword.invalid || !this.equalPassword()
+              }"
+            />
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary btn-block"
+            [disabled]="this.f.invalid || !this.equalPassword()"
+            (click)="this.register()"
+          >
+            Register
+          </button>
+        </form>
+        <div id="error-message" class="text-danger mt-2"></div>
+        <button
+          (click)="this.goBack()"
+          class="btn btn-secondary btn-block mt-2"
+        >
+          Back
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
