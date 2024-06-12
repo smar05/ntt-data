@@ -11,8 +11,9 @@ export class AppComponent implements OnInit {
   public showNavbar: boolean = false;
 
   ngOnInit(): void {
-    this.showNavbar = !document.location.pathname.includes(
-      `/${EnumRutas.LOGIN}`
+    this.showNavbar = !(
+      document.location.pathname.includes(`/${EnumRutas.LOGIN}`) ||
+      document.location.pathname.includes(`/${EnumRutas.REGISTER}`)
     );
   }
 }

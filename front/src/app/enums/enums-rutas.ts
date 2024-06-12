@@ -4,4 +4,5 @@ export enum EnumRutas {
   ADD_VEHICULOS = `add`,
   EDIT_VEHICULOS = `edit`,
   LOGIN = 'login',
+  REGISTER = 'register',
 }

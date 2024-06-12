@@ -5,9 +5,10 @@ import { VehiculosListComponent } from './vehiculos-list/vehiculos-list.componen
 import { PagesRoutingModule } from './pages-routing.module';
 import { VehiculosFormComponent } from './vehiculos-form/vehiculos-form.component';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
-  declarations: [VehiculosListComponent, VehiculosFormComponent, LoginComponent],
+  declarations: [VehiculosListComponent, VehiculosFormComponent, LoginComponent, RegisterComponent],
   imports: [PagesRoutingModule, ReactiveFormsModule, CommonModule],
   providers: [],
 })
