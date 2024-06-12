@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { EnumLocalStorage } from '../enums/enums-localstorage';
+import { EnumRutas } from '../enums/enums-rutas';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +20,7 @@ export class HttpService {
    * @memberof HttpService
    */
   public get(url: string, params: any = {}): Observable<any> {
+    params.token = localStorage.getItem(EnumLocalStorage.TOKEN);
     return this.http.get(`${this.urlBack}${url}`, { params });
   }
 
@@ -29,7 +32,9 @@ export class HttpService {
    * @memberof HttpService
    */
   public delete(url: string): Observable<any> {
-    return this.http.delete(`${this.urlBack}${url}`);
+    return this.http.delete(`${this.urlBack}${url}`, {
+      params: { token: localStorage.getItem(EnumLocalStorage.TOKEN) as string },
+    });
   }
 
   /**
@@ -41,7 +46,9 @@ export class HttpService {
    * @memberof HttpService
    */
   public put(url: string, body: any = {}): Observable<any> {
-    return this.http.put(`${this.urlBack}${url}`, body);
+    return this.http.put(`${this.urlBack}${url}`, body, {
+      params: { token: localStorage.getItem(EnumLocalStorage.TOKEN) as string },
+    });
   }
 
   /**
@@ -53,6 +60,15 @@ export class HttpService {
    * @memberof HttpService
    */
   public post(url: string, body: any = {}): Observable<any> {
-    return this.http.post(`${this.urlBack}${url}`, body);
+    let params: any = null;
+    if (!(url.includes(EnumRutas.LOGIN) || url.includes(EnumRutas.REGISTER))) {
+      params = {
+        token: localStorage.getItem(EnumLocalStorage.TOKEN) as string,
+      };
+    }
+
+    return this.http.post(`${this.urlBack}${url}`, body, {
+      params,
+    });
   }
 }

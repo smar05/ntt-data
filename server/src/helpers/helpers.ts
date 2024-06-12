@@ -16,7 +16,7 @@ export class Helpers {
     res: Response | any,
     next: any
   ): void {
-    const token = req.headers.get("token");
+    const token: string = req.query.token;
     const SECRET_KEY: string = "SECRET_KEY";
 
     if (token == null) return res.sendStatus(401);
