@@ -41,16 +41,27 @@ class LoginController {
    * @return {*}  {Promise<void>}
    * @memberof LoginController
    */
-  public async register(req: Request, res: Response): Promise<void> {
+  public async register(req: Request, res: Response): Promise<any> {
     const { username, password }: IUsuario = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
+    let user: IUsuario = null as any;
+
+    try {
+      user = (
+        await axios.get(`http://localhost:3000/usuarios/username/${username}`)
+      ).data;
+    } catch (error) {
+      user = null as any;
+    }
+
+    if (user) return res.status(401).json({ message: "El usuario ya existe" });
 
     await axios.post(`http://localhost:3000/usuarios`, {
       username,
       password: hashedPassword,
     });
 
-    res.status(201).send("User registered");
+    res.status(201).json({ message: "User registered" });
   }
 }
 
