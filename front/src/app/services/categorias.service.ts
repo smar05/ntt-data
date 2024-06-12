@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from './http.service';
-import { Observable } from 'rxjs';
+import { Observable, shareReplay } from 'rxjs';
 import { ICategoria } from '../interface/i-categoria';
 
 @Injectable({
@@ -8,6 +8,7 @@ import { ICategoria } from '../interface/i-categoria';
 })
 export class CategoriasService {
   private url: string = '/categorias';
+  private categorias: Observable<ICategoria[]> = null as any;
 
   constructor(private httpService: HttpService) {}
 
@@ -18,17 +19,10 @@ export class CategoriasService {
    * @memberof CategoriasService
    */
   public getCategorias(): Observable<ICategoria[]> {
-    return this.httpService.get(this.url);
-  }
+    if (!this.categorias) {
+      this.categorias = this.httpService.get(this.url).pipe(shareReplay(1));
+    }
 
-  /**
-   * Obtener una categoria por id
-   *
-   * @param {number} id
-   * @return {*}  {Observable<ICategoria[]>}
-   * @memberof CategoriasService
-   */
-  public getCategoria(id: number): Observable<ICategoria[] | ICategoria> {
-    return this.httpService.get(`${this.url}/${id}`);
+    return this.categorias;
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from './http.service';
-import { Observable } from 'rxjs';
+import { Observable, shareReplay } from 'rxjs';
 import { IVehiculo } from '../interface/i-vehiculo';
 
 @Injectable({
@@ -8,6 +8,9 @@ import { IVehiculo } from '../interface/i-vehiculo';
 })
 export class VehiculosService {
   private url: string = '/vehiculos';
+  private dataVehiculos!: Observable<IVehiculo[]>;
+  // Id, Ob(vehiculo)
+  private dataVehiculoId: { [key: string]: Observable<IVehiculo> } = {};
 
   constructor(private httpService: HttpService) {}
 
@@ -18,7 +21,10 @@ export class VehiculosService {
    * @memberof VehiculosService
    */
   public getVehiculos(): Observable<IVehiculo[]> {
-    return this.httpService.get(this.url);
+    if (!this.dataVehiculos) {
+      this.dataVehiculos = this.httpService.get(this.url).pipe(shareReplay(1));
+    }
+    return this.dataVehiculos;
   }
 
   /**
@@ -29,6 +35,8 @@ export class VehiculosService {
    * @memberof VehiculosService
    */
   public deleteVehiculo(id: number): Observable<any> {
+    this.dataVehiculos = null as any;
+    delete this.dataVehiculoId[id];
     return this.httpService.delete(`${this.url}/${id}`);
   }
 
@@ -40,7 +48,12 @@ export class VehiculosService {
    * @memberof VehiculosService
    */
   public getVehiculo(id: number): Observable<IVehiculo[] | IVehiculo> {
-    return this.httpService.get(`${this.url}/${id}`);
+    if (!this.dataVehiculoId[id]) {
+      this.dataVehiculoId[id] = this.httpService
+        .get(`${this.url}/${id}`)
+        .pipe(shareReplay(1));
+    }
+    return this.dataVehiculoId[id];
   }
 
   /**
@@ -52,6 +65,8 @@ export class VehiculosService {
    * @memberof VehiculosService
    */
   public putVehiculo(id: number, body: IVehiculo): Observable<any> {
+    this.dataVehiculos = null as any;
+    delete this.dataVehiculoId[id];
     return this.httpService.put(`${this.url}/${id}`, body);
   }
 
@@ -64,6 +79,7 @@ export class VehiculosService {
    * @memberof VehiculosService
    */
   public postVehiculo(body: IVehiculo): Observable<any> {
+    this.dataVehiculos = null as any;
     return this.httpService.post(`${this.url}`, body);
   }
 }
