@@ -6,6 +6,7 @@
   "scripts": {
     "test": "test",
     "build": "tsc -w",
+    "build-prod": "tsc",
     "start": "nodemon build/index.js",
     "dev": "concurrently \"npm run build\" \"npm run start\""
   },
